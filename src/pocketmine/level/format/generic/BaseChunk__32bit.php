@@ -55,7 +55,7 @@ abstract class BaseChunk extends BaseFullChunk implements Chunk{
 		if(\count($biomeColors) === 256){
 			$this->biomeColors = $biomeColors;
 		}else{
-			$this->biomeColors = \array_fill(0, 256, (\PHP_INT_SIZE === 8 ? \unpack("N", "\xff\x00\x00\x00")[1] << 32 >> 32 : \unpack("N", "\xff\x00\x00\x00")[1]));
+			$this->biomeColors = \array_fill(0, 256, \unpack("N", "\xff\x00\x00\x00")[1]);
 		}
 
 		if(\count($heightMap) === 256){
