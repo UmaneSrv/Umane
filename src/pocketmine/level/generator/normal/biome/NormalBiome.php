@@ -12,19 +12,11 @@
 
 namespace pocketmine\level\generator\normal\biome;
 
+use pocketmine\level\generator\biome\Biome;
 
+abstract class NormalBiome extends Biome{
 
-class DesertBiome extends SandyBiome{
-
-	public function __construct(){
-		parent::__construct();
-		$this->setElevation(63, 74);
-
-		$this->temperature = 2;
-		$this->rainfall = 0;
-	}
-
-	public function getName(){
-		return "Desert";
+	public function getColor(){
+		return $this->grassColor;
 	}
 }
