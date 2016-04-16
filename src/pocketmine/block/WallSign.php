@@ -1,0 +1,43 @@
+<?php
+
+/*
+ *  ____ 
+ * / ___|  ___ _ __ _ __  _   _ _   _ 
+ * \___ \ / _ \ '__| '_ \| | | | | | |
+ *  ___) |  __/ |  | | | | |_| | |_| |
+ * |____/ \___|_|  |_| |_|\__, |\__,_|
+ *                        |___/       
+ * 
+*/
+
+namespace pocketmine\block;
+
+
+use pocketmine\level\Level;
+
+class WallSign extends SignPost{
+
+	protected $id = self::WALL_SIGN;
+
+	public function getName(){
+		return "Wall Sign";
+	}
+
+	public function onUpdate($type){
+		$faces = [
+			2 => 3,
+			3 => 2,
+			4 => 5,
+			5 => 4,
+		];
+		if($type === Level::BLOCK_UPDATE_NORMAL){
+			if(isset($faces[$this->meta])) {
+				if ($this->getSide($faces[$this->meta])->getId() === self::AIR) {
+					$this->getLevel()->useBreakOn($this);
+				}
+				return Level::BLOCK_UPDATE_NORMAL;
+			}
+		}
+		return \false;
+	}
+}
