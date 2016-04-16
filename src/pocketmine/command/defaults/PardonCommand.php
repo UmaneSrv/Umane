@@ -15,18 +15,17 @@ namespace pocketmine\command\defaults;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\event\TranslationContainer;
-use pocketmine\Player;
 
 
-class BanCommand extends VanillaCommand{
+class PardonCommand extends VanillaCommand{
 
 	public function __construct($name){
 		parent::__construct(
 			$name,
-			"%pocketmine.command.ban.player.description",
-			"%commands.ban.usage"
+			"%pocketmine.command.unban.player.description",
+			"%commands.unban.usage"
 		);
-		$this->setPermission("pocketmine.command.ban.player");
+		$this->setPermission("pocketmine.command.unban.player");
 	}
 
 	public function execute(CommandSender $sender, $currentAlias, array $args){
@@ -34,22 +33,15 @@ class BanCommand extends VanillaCommand{
 			return \true;
 		}
 
-		if(\count($args) === 0){
+		if(\count($args) !== 1){
 			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
 
 			return \false;
 		}
 
-		$name = \array_shift($args);
-		$reason = \implode(" ", $args);
+		$sender->getServer()->getNameBans()->remove($args[0]);
 
-		$sender->getServer()->getNameBans()->addBan($name, $reason, \null, $sender->getName());
-
-		if(($player = $sender->getServer()->getPlayerExact($name)) instanceof Player){
-			$player->kick($reason !== "" ? "Banned by admin. Reason: " . $reason : "Banned by admin.");
-		}
-
-		Command::broadcastCommandMessage($sender, new TranslationContainer("%commands.ban.success", [$player !== \null ? $player->getName() : $name]));
+		Command::broadcastCommandMessage($sender, new TranslationContainer("commands.unban.success", [$args[0]]));
 
 		return \true;
 	}

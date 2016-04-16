@@ -12,21 +12,20 @@
 
 namespace pocketmine\command\defaults;
 
-use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\event\TranslationContainer;
 use pocketmine\Player;
+use pocketmine\utils\TextFormat;
 
-
-class BanCommand extends VanillaCommand{
+class MeCommand extends VanillaCommand{
 
 	public function __construct($name){
 		parent::__construct(
 			$name,
-			"%pocketmine.command.ban.player.description",
-			"%commands.ban.usage"
+			"%pocketmine.command.me.description",
+			"%commands.me.usage"
 		);
-		$this->setPermission("pocketmine.command.ban.player");
+		$this->setPermission("pocketmine.command.me");
 	}
 
 	public function execute(CommandSender $sender, $currentAlias, array $args){
@@ -40,16 +39,7 @@ class BanCommand extends VanillaCommand{
 			return \false;
 		}
 
-		$name = \array_shift($args);
-		$reason = \implode(" ", $args);
-
-		$sender->getServer()->getNameBans()->addBan($name, $reason, \null, $sender->getName());
-
-		if(($player = $sender->getServer()->getPlayerExact($name)) instanceof Player){
-			$player->kick($reason !== "" ? "Banned by admin. Reason: " . $reason : "Banned by admin.");
-		}
-
-		Command::broadcastCommandMessage($sender, new TranslationContainer("%commands.ban.success", [$player !== \null ? $player->getName() : $name]));
+		$sender->getServer()->broadcastMessage(new TranslationContainer("chat.type.emote", [$sender instanceof Player ? $sender->getDisplayName() : $sender->getName(), TextFormat::WHITE . \implode(" ", $args)]));
 
 		return \true;
 	}

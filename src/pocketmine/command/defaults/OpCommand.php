@@ -16,17 +16,17 @@ use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\event\TranslationContainer;
 use pocketmine\Player;
+use pocketmine\utils\TextFormat;
 
-
-class BanCommand extends VanillaCommand{
+class OpCommand extends VanillaCommand{
 
 	public function __construct($name){
 		parent::__construct(
 			$name,
-			"%pocketmine.command.ban.player.description",
-			"%commands.ban.usage"
+			"%pocketmine.command.op.description",
+			"%commands.op.usage"
 		);
-		$this->setPermission("pocketmine.command.ban.player");
+		$this->setPermission("pocketmine.command.op.give");
 	}
 
 	public function execute(CommandSender $sender, $currentAlias, array $args){
@@ -41,16 +41,13 @@ class BanCommand extends VanillaCommand{
 		}
 
 		$name = \array_shift($args);
-		$reason = \implode(" ", $args);
 
-		$sender->getServer()->getNameBans()->addBan($name, $reason, \null, $sender->getName());
-
-		if(($player = $sender->getServer()->getPlayerExact($name)) instanceof Player){
-			$player->kick($reason !== "" ? "Banned by admin. Reason: " . $reason : "Banned by admin.");
+		$player = $sender->getServer()->getOfflinePlayer($name);
+		Command::broadcastCommandMessage($sender, new TranslationContainer("commands.op.success", [$player->getName()]));
+		if($player instanceof Player){
+			$player->sendMessage(TextFormat::GRAY . "You are now op!");
 		}
-
-		Command::broadcastCommandMessage($sender, new TranslationContainer("%commands.ban.success", [$player !== \null ? $player->getName() : $name]));
-
+		$player->setOp(\true);
 		return \true;
 	}
 }
