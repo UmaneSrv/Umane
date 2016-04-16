@@ -10,18 +10,26 @@
  * 
 */
 
-/**
- * Entity related Events, like spawn, inventory, attack...
- */
 namespace pocketmine\event\entity;
 
-use pocketmine\event\Event;
+use pocketmine\entity\Projectile;
 
-abstract class EntityEvent extends Event{
-	/** @var \pocketmine\entity\Entity */
-	protected $entity;
+class ProjectileHitEvent extends EntityEvent{
+	public static $handlerList = \null;
 
+	/**
+	 * @param Projectile $entity
+	 */
+	public function __construct(Projectile $entity){
+		$this->entity = $entity;
+
+	}
+
+	/**
+	 * @return Projectile
+	 */
 	public function getEntity(){
 		return $this->entity;
 	}
+
 }
