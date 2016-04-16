@@ -15,6 +15,6 @@
 
 namespace raklib\protocol;
 
-class ACK extends AcknowledgePacket{
-    public static $ID = 0xc0;
+class ADVERTISE_SYSTEM extends UNCONNECTED_PONG{
+    public static $ID = 0x1d;
 }

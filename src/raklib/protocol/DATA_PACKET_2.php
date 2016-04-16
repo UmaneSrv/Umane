@@ -15,6 +15,6 @@
 
 namespace raklib\protocol;
 
-class ACK extends AcknowledgePacket{
-    public static $ID = 0xc0;
+class DATA_PACKET_2 extends DataPacket{
+    public static $ID = 0x82;
 }
