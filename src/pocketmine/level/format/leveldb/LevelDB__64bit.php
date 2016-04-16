@@ -190,7 +190,7 @@ class LevelDB extends BaseLevelProvider{
 	}
 
 	public function isChunkLoaded($x, $z){
-		return isset($this->chunks[(\PHP_INT_SIZE === 8 ? ((($x) & 0xFFFFFFFF) << 32) | (( $z) & 0xFFFFFFFF) : ($x) . ":" . ( $z))]);
+		return isset($this->chunks[((($x) & 0xFFFFFFFF) << 32) | (( $z) & 0xFFFFFFFF)]);
 	}
 
 	public function saveChunks(){
@@ -200,7 +200,7 @@ class LevelDB extends BaseLevelProvider{
 	}
 
 	public function loadChunk($chunkX, $chunkZ, $create = \false){
-		if(isset($this->chunks[$index = (\PHP_INT_SIZE === 8 ? ((($chunkX) & 0xFFFFFFFF) << 32) | (( $chunkZ) & 0xFFFFFFFF) : ($chunkX) . ":" . ( $chunkZ))])){
+		if(isset($this->chunks[$index = ((($chunkX) & 0xFFFFFFFF) << 32) | (( $chunkZ) & 0xFFFFFFFF)])){
 			return \true;
 		}
 
@@ -249,7 +249,7 @@ class LevelDB extends BaseLevelProvider{
 	}
 
 	public function unloadChunk($x, $z, $safe = \true){
-		$chunk = isset($this->chunks[$index = (\PHP_INT_SIZE === 8 ? ((($x) & 0xFFFFFFFF) << 32) | (( $z) & 0xFFFFFFFF) : ($x) . ":" . ( $z))]) ? $this->chunks[$index] : \null;
+		$chunk = isset($this->chunks[$index = ((($x) & 0xFFFFFFFF) << 32) | (( $z) & 0xFFFFFFFF)]) ? $this->chunks[$index] : \null;
 		if($chunk instanceof FullChunk and $chunk->unload(\false, $safe)){
 			unset($this->chunks[$index]);
 			return \true;
@@ -276,7 +276,7 @@ class LevelDB extends BaseLevelProvider{
 	 * @return Chunk
 	 */
 	public function getChunk($chunkX, $chunkZ, $create = \false){
-		$index = (\PHP_INT_SIZE === 8 ? ((($chunkX) & 0xFFFFFFFF) << 32) | (( $chunkZ) & 0xFFFFFFFF) : ($chunkX) . ":" . ( $chunkZ));
+		$index = ((($chunkX) & 0xFFFFFFFF) << 32) | (( $chunkZ) & 0xFFFFFFFF);
 		if(isset($this->chunks[$index])){
 			return $this->chunks[$index];
 		}else{
@@ -303,7 +303,7 @@ class LevelDB extends BaseLevelProvider{
 		$chunk->setX($chunkX);
 		$chunk->setZ($chunkZ);
 
-		if(isset($this->chunks[$index = (\PHP_INT_SIZE === 8 ? ((($chunkX) & 0xFFFFFFFF) << 32) | (( $chunkZ) & 0xFFFFFFFF) : ($chunkX) . ":" . ( $chunkZ))]) and $this->chunks[$index] !== $chunk){
+		if(isset($this->chunks[$index = ((($chunkX) & 0xFFFFFFFF) << 32) | (( $chunkZ) & 0xFFFFFFFF)]) and $this->chunks[$index] !== $chunk){
 			$this->unloadChunk($chunkX, $chunkZ, \false);
 		}
 
