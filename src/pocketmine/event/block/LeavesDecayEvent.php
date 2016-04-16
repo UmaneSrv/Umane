@@ -10,29 +10,16 @@
  * 
 */
 
-/**
- * Block related events
- */
 namespace pocketmine\event\block;
 
 use pocketmine\block\Block;
-use pocketmine\event\Event;
+use pocketmine\event\Cancellable;
 
-abstract class BlockEvent extends Event{
-	/** @var \pocketmine\block\Block */
-	protected $block;
+class LeavesDecayEvent extends BlockEvent implements Cancellable{
+	public static $handlerList = \null;
 
-	/**
-	 * @param Block $block
-	 */
 	public function __construct(Block $block){
-		$this->block = $block;
+		parent::__construct($block);
 	}
 
-	/**
-	 * @return Block
-	 */
-	public function getBlock(){
-		return $this->block;
-	}
 }
