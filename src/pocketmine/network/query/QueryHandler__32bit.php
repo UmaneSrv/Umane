@@ -60,13 +60,13 @@ class QueryHandler{
 	}
 
 	public static function getTokenString($token, $salt){
-		return (\PHP_INT_SIZE === 8 ? \unpack("N", \substr(\hash("sha512", $salt . ":" . $token, \true), 7, 4))[1] << 32 >> 32 : \unpack("N", \substr(\hash("sha512", $salt . ":" . $token, \true), 7, 4))[1]);
+		return \unpack("N", \substr(\hash("sha512", $salt . ":" . $token, \true), 7, 4))[1];
 	}
 
 	public function handle($address, $port, $packet){
 		$offset = 2;
 		$packetType = \ord($packet{$offset++});
-		$sessionID = (\PHP_INT_SIZE === 8 ? \unpack("N", \substr($packet, $offset, 4))[1] << 32 >> 32 : \unpack("N", \substr($packet, $offset, 4))[1]);
+		$sessionID = \unpack("N", \substr($packet, $offset, 4))[1];
 		$offset += 4;
 		$payload = \substr($packet, $offset);
 
@@ -79,7 +79,7 @@ class QueryHandler{
 				$this->server->getNetwork()->sendPacket($address, $port, $reply);
 				break;
 			case self::STATISTICS: //Stat
-				$token = (\PHP_INT_SIZE === 8 ? \unpack("N", \substr($payload, 0, 4))[1] << 32 >> 32 : \unpack("N", \substr($payload, 0, 4))[1]);
+				$token = \unpack("N", \substr($payload, 0, 4))[1];
 				if($token !== self::getTokenString($this->token, $address) and $token !== self::getTokenString($this->lastToken, $address)){
 					break;
 				}
