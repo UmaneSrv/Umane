@@ -583,7 +583,7 @@ class NBT{
 	}
 
 	public function getInt(){
-		return $this->endianness === self::BIG_ENDIAN ? (\PHP_INT_SIZE === 8 ? \unpack("N", $this->get(4))[1] << 32 >> 32 : \unpack("N", $this->get(4))[1]) : (\PHP_INT_SIZE === 8 ? \unpack("V", $this->get(4))[1] << 32 >> 32 : \unpack("V", $this->get(4))[1]);
+		return $this->endianness === self::BIG_ENDIAN ? \unpack("N", $this->get(4))[1] << 32 >> 32 : \unpack("V", $this->get(4))[1] << 32 >> 32;
 	}
 
 	public function putInt($v){
@@ -595,7 +595,7 @@ class NBT{
 	}
 
 	public function putLong($v){
-		$this->buffer .= $this->endianness === self::BIG_ENDIAN ? Binary::writeLong($v) : Binary::writeLLong($v);
+		$this->buffer .= $this->endianness === self::BIG_ENDIAN ? \pack("NN", $v >> 32, $v & 0xFFFFFFFF) : Binary::writeLLong($v);
 	}
 
 	public function getFloat(){
