@@ -12,10 +12,10 @@
 
 namespace pocketmine\item;
 
-
-class Apple extends Item{
+class GlowstoneDust extends Item{
 	public function __construct($meta = 0, $count = 1){
-		parent::__construct(self::APPLE, 0, $count, "Apple");
+		parent::__construct(self::GLOWSTONE_DUST, $meta, $count, "Glowstone Dust");
 	}
 
 }
+

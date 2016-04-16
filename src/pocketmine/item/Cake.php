@@ -12,10 +12,15 @@
 
 namespace pocketmine\item;
 
+use pocketmine\block\Block;
 
-class Apple extends Item{
+class Cake extends Item{
 	public function __construct($meta = 0, $count = 1){
-		parent::__construct(self::APPLE, 0, $count, "Apple");
+		$this->block = Block::get(Item::CAKE_BLOCK);
+		parent::__construct(self::CAKE, 0, $count, "Cake");
 	}
 
+	public function getMaxStackSize(){
+		return 1;
+	}
 }

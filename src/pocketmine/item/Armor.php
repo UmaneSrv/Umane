@@ -10,12 +10,12 @@
  * 
 */
 
+
 namespace pocketmine\item;
 
+abstract class Armor extends Item{
 
-class Apple extends Item{
-	public function __construct($meta = 0, $count = 1){
-		parent::__construct(self::APPLE, 0, $count, "Apple");
+	public function getMaxStackSize(){
+		return 1;
 	}
-
 }

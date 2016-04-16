@@ -13,9 +13,9 @@
 namespace pocketmine\item;
 
 
-class Apple extends Item{
+class Diamond extends Item{
 	public function __construct($meta = 0, $count = 1){
-		parent::__construct(self::APPLE, 0, $count, "Apple");
+		parent::__construct(self::DIAMOND, 0, $count, "Diamond");
 	}
 
 }

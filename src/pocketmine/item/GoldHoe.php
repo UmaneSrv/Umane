@@ -13,9 +13,12 @@
 namespace pocketmine\item;
 
 
-class Apple extends Item{
+class GoldHoe extends Tool{
 	public function __construct($meta = 0, $count = 1){
-		parent::__construct(self::APPLE, 0, $count, "Apple");
+		parent::__construct(self::GOLD_HOE, $meta, $count, "Gold Hoe");
 	}
 
+	public function isHoe(){
+		return Tool::TIER_GOLD;
+	}
 }

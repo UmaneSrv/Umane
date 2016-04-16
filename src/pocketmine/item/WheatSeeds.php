@@ -12,10 +12,11 @@
 
 namespace pocketmine\item;
 
+use pocketmine\block\Block;
 
-class Apple extends Item{
+class WheatSeeds extends Item{
 	public function __construct($meta = 0, $count = 1){
-		parent::__construct(self::APPLE, 0, $count, "Apple");
+		$this->block = Block::get(Item::WHEAT_BLOCK);
+		parent::__construct(self::WHEAT_SEEDS, 0, $count, "Wheat Seeds");
 	}
-
 }

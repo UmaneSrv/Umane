@@ -12,10 +12,10 @@
 
 namespace pocketmine\item;
 
-
-class Apple extends Item{
+class NetherBrick extends Item{
 	public function __construct($meta = 0, $count = 1){
-		parent::__construct(self::APPLE, 0, $count, "Apple");
+		parent::__construct(self::NETHER_BRICK, $meta, $count, "Nether Brick");
 	}
 
 }
+

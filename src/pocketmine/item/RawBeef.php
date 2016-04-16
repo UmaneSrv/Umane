@@ -12,10 +12,10 @@
 
 namespace pocketmine\item;
 
-
-class Apple extends Item{
+class RawBeef extends Item{
 	public function __construct($meta = 0, $count = 1){
-		parent::__construct(self::APPLE, 0, $count, "Apple");
+		parent::__construct(self::RAW_BEEF, $meta, $count, "Raw Beef");
 	}
 
 }
+

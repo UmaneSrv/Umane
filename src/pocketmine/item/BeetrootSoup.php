@@ -13,9 +13,12 @@
 namespace pocketmine\item;
 
 
-class Apple extends Item{
+class BeetrootSoup extends Item{
 	public function __construct($meta = 0, $count = 1){
-		parent::__construct(self::APPLE, 0, $count, "Apple");
+		parent::__construct(self::BEETROOT_SOUP, 0, $count, "Beetroot Soup");
 	}
 
+	public function getMaxStackSize(){
+		return 1;
+	}
 }
