@@ -30,17 +30,18 @@ use pocketmine\utils\Binary;
 
 
 
-class Byte extends NamedTag{
+class ByteArray extends NamedTag{
 
 	public function getType(){
-		return NBT::TAG_Byte;
+		return NBT::TAG_ByteArray;
 	}
 
 	public function read(NBT $nbt){
-		$this->value = \ord($nbt->get(1));
+		$this->value = $nbt->get($nbt->endianness === 1 ? \unpack("N", $nbt->get(4))[1] << 32 >> 32 : \unpack("V", $nbt->get(4))[1] << 32 >> 32);
 	}
 
 	public function write(NBT $nbt){
-		$nbt->buffer .= \chr($this->value);
+		$nbt->buffer .= $nbt->endianness === 1 ? \pack("N", \strlen($this->value)) : \pack("V", \strlen($this->value));
+		$nbt->buffer .= $this->value;
 	}
 }
