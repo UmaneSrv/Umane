@@ -13,10 +13,13 @@
 namespace pocketmine\level\sound;
 
 use pocketmine\math\Vector3;
-use pocketmine\network\protocol\LevelEventPacket;
+use pocketmine\network\protocol\DataPacket;
 
-class BatSound extends GenericSound{
-	public function __construct(Vector3 $pos, $pitch = 0){
-		parent::__construct($pos, LevelEventPacket::EVENT_SOUND_BAT_FLY, $pitch);
-	}
+abstract class Sound extends Vector3{
+	
+	/**
+	 * @return DataPacket|DataPacket[]
+	 */
+	abstract public function encode();
+
 }
