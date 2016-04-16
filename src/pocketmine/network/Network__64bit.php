@@ -224,7 +224,7 @@ class Network{
 		$offset = 0;
 		try{
 			while($offset < $len){
-				$pkLen = (\PHP_INT_SIZE === 8 ? \unpack("N", \substr($str, $offset, 4))[1] << 32 >> 32 : \unpack("N", \substr($str, $offset, 4))[1]);
+				$pkLen = \unpack("N", \substr($str, $offset, 4))[1] << 32 >> 32;
 				$offset += 4;
 
 				$buf = \substr($str, $offset, $pkLen);
